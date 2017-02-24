@@ -1,0 +1,450 @@
+{
+    "id": "com.qubino.shutter",
+    "name": {
+        "en": "Qubino shutters"
+    },
+    "version": "0.0.1",
+    "compatibility": ">=1.1.9",
+    "description": {
+        "en": "Qubino shutters devices for Homey",
+        "nl": "Qubino rolluik apparaten voor Homey"
+    },
+    "category": [
+        "appliances"
+    ],
+    "images": {
+        "large": "/assets/images/large.png",
+        "small": "/assets/images/small.png"
+    },
+    "author": {
+        "name": "Carlo Landmeter",
+        "email": "clandmeter@gmail.com"
+    },
+    "drivers": [
+        {
+            "id": "ZMNHOD1",
+            "name": {
+                "en": "ZMNHOD1 Flush Shutter DC"
+            },
+            "zwave": {
+                "manufacturerId": 345,
+                "productTypeId": 3,
+                "productId": 83,
+                "learnmode": {
+                    "image": "/drivers/ZMNHOD1/assets/learnmode.svg",
+                    "instruction": {
+                        "en": "For INCLUSION: press service button S your Relay for more than 2 seconds or press push button I1 three times within 3 seconds (3 times change switch state within 3 seconds). For EXCLUSION: press push button I1 five times within 3 seconds ( 5 times change switch state within 3 seconds) or if service button S is pressed more than 2 and less than 6 seconds.",
+                        "nl": "Voor TOEVOEGEN: houd de service knop S van je Relais langer dan 2 seconden ingedrukt of druk knop I1 3x binnen 3 seconden (verander de status van de knop 3x binnen 3 seconden). Voor VERWIJDEREN: druk knop I1 5x binnen 3 seconden (verander de status van de knop 5x binnen 3 seconden) of houd service button S meer dan 2 maar korter dan 6 seconden ingedrukt."
+                    }
+                },
+                "associationGroups": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                ]
+            },
+            "class": "windowcoverings",
+            "capabilities": [
+                "windowcoverings_state",
+                "dim.shutter",
+                "dim.venetian",
+                "measure_power",
+                "measure_temperature"
+            ],
+            "capabilitiesOptions": {
+                "dim.shutter": {
+                    "title": {
+                        "en": "Shutter position"
+                    }
+                },
+                "dim.venetian": {
+                    "title": {
+                        "en": "Slats position"
+                    }
+                }
+            },
+            "mobile": {
+                "components": [
+                    {
+                        "id": "ternary",
+                        "capabilities": [
+                            "windowcoverings_state"
+                        ]
+                    },
+                    {
+                        "id": "slider",
+                        "capabilities": [
+                            "dim.shutter"
+                        ],
+                        "options": {
+                            "showTitle": true
+                        }
+                    },
+                    {
+                        "id": "slider",
+                        "capabilities": [
+                            "dim.venetian"
+                        ],
+                        "options": {
+                            "showTitle": true
+                        }
+                    },
+                    {
+                        "id": "sensor",
+                        "capabilities": [
+                            "measure_power",
+                            "measure_temperature"
+                        ]
+                    }
+                ]
+            },
+            "images": {
+                "large": "/drivers/ZMNHOD1/assets/images/large.png",
+                "small": "/drivers/ZMNHOD1/assets/images/small.png"
+            },
+            "settings": [
+                {
+                    "id": "all_on_all_off",
+                    "type": "dropdown",
+                    "label": {
+                        "en": "Activate / deactivate functions ALL ON/ALL OFF"
+                    },
+                    "hint": {
+                        "en": "Responds to commands ALL ON / ALL OFF that may be sent by the main controller or by other controller belonging to the system."
+                    },
+                    "value": "255",
+                    "values": [
+                        {
+                            "id": "255",
+                            "label": {
+                                "en": "ALL ON active, ALL OFF active"
+                            }
+                        },
+                        {
+                            "id": "0",
+                            "label": {
+                                "en": "ALL ON is not active, ALL OFF is not active"
+                            }
+                        },
+                        {
+                            "id": "1",
+                            "label": {
+                                "en": "ALL ON is not active ALL OFF active"
+                            }
+                        },
+                        {
+                            "id": "2",
+                            "label": {
+                                "en": "ALL ON active ALL OFF is not active"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "power_report_on_power_change",
+                    "type": "number",
+                    "label": {
+                        "en": "Power reporting in Watts on power change"
+                    },
+                    "hint": {
+                        "en": "Set value from 0 - 100 (0% - 100%). 0 - Reporting Disabled. 1 to 100 = 1% to 100% Reporting enabled. Power report is send (push) only when actual power (in Watts) in real time changes for more than set percentage comparing to previous actual power in Watts, step is 1%. Default value 1"
+                    },
+                    "value": 1,
+                    "attr": {
+                        "min": 0,
+                        "max": 100
+                    }
+                },
+                {
+                    "id": "power_report_by_time_interval",
+                    "type": "number",
+                    "label": {
+                        "en": "Power reporting in Watts by time interval"
+                    },
+                    "hint": {
+                        "en": "Set value means time interval (0 - 32767) in seconds, when power report is send. 0 - Reporting Disabled. 1 - 32767) = 1second - 32767) seconds, Reporting enabled. Power report is send with time interval set by entered value."
+                    },
+                    "value": 300,
+                    "attr": {
+                        "min": 0,
+                        "max": 32767
+                    }
+                },
+                {
+                    "id": "operating_modes",
+                    "type": "radio",
+                    "label": {
+                        "en": "Operating modes"
+                    },
+                    "hint": {
+                        "en": "Defines selection between two available operating modes. 0 Shutter mode 1 Venetian mode (up/down and slate tilting) Note: When setting parameter, module needs to be reconfigured! Please check detailed description in this manual."
+                    },
+                    "value": "0",
+                    "attr": {
+                        "min": 0,
+                        "max": 1
+                    },
+                    "values": [
+                        {
+                            "id": "0",
+                            "label": {
+                                "en": "Shutter"
+                            }
+                        },
+                        {
+                            "id": "1",
+                            "label": {
+                                "en": "Venetian"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "slats_tilting_full_turn_time",
+                    "type": "number",
+                    "label": {
+                        "en": "Slats tilting full turn time"
+                    },
+                    "hint": {
+                        "en": "Defines the time necessary for slats to make full turn (180 degrees). 0 Tilting time disabled 1 to 32767 = 0,01seconds to 327,67 seconds Note: If time set is too high, this will result that after full turn, shutter will start move up or down, for time remaining."
+                    },
+                    "value": 150,
+                    "attr": {
+                        "min": 0,
+                        "max": 32767
+                    }
+                },
+                {
+                    "id": "slats_position",
+                    "type": "radio",
+                    "label": {
+                        "en": "Slats position"
+                    },
+                    "hint": {
+                        "en": "This parameter defines slats position after up/down movement through UI or push buttons, return to previously set position only in case of 0 - UI control. 1 - UI control, momentary switch operation, or when the limit switch is reached. 2 - UI control, Push button, Limit switch is reached, after receiving a STOP control frame from UI. ( Default value 2 )"
+                    },
+                    "value": "0",
+                    "attr": {
+                        "min": 0,
+                        "max": 1
+                    },
+                    "values": [
+                        {
+                            "id": "0",
+                            "label": {
+                                "en": "Slats return to previously set position only in case of Z-wave control."
+                            }
+                        },
+                        {
+                            "id": "1",
+                            "label": {
+                                "en": "Slats return to previously set position in case of Z-wave control, push-button operation or when the lower limit switch is reached."
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "motor_moving_up_down_time",
+                    "type": "number",
+                    "label": {
+                        "en": "Motor moving up/down time"
+                    },
+                    "hint": {
+                        "en": "Defines shutter motor moving time of complete opening or complete closing. 0 - moving time disabled (working with limit switches) 1 - 32767 = 0,1seconds - 3276,7seconds. After that time motor is stopped (relay goes to off state) See complete note in documentation."
+                    },
+                    "value": 0,
+                    "attr": {
+                        "min": 0,
+                        "max": 32767
+                    }
+                },
+                {
+                    "id": "motor_operation_detection",
+                    "type": "number",
+                    "label": {
+                        "en": "Motor operation detection"
+                    },
+                    "hint": {
+                        "en": "Power threshold to be interpreted when motor reach the limit switch. Available settings: 5 to 100 (0,5 W to 10 W), step is 0,1W."
+                    },
+                    "value": 6,
+                    "attr": {
+                        "min": 5,
+                        "max": 100
+                    }
+                },
+                {
+                    "id": "forced_shutter_calibration",
+                    "type": "checkbox",
+                    "label": {
+                        "en": "Forced Shutter calibration"
+                    },
+                    "value": false,
+                    "hint": {
+                        "en": "By modifying the parameters setting, Shutter enters the calibration mode. (after shutter performs the calibration process, completing full cycle - up, down and up, set the parameter value back to default. )"
+                    }
+                },
+                {
+                    "id": "power_reporting_to_controller",
+                    "type": "radio",
+                    "label": {
+                        "en": "Power reporting to controller"
+                    },
+                    "hint": {
+                        "en": "Defines if reporting regarding power level, multilevel, etc.., are reported to controller or not."
+                    },
+                    "value": "1",
+                    "attr": {
+                        "min": 0,
+                        "max": 1
+                    },
+                    "values": [
+                        {
+                            "id": "0",
+                            "label": {
+                                "en": "Disabled"
+                            }
+                        },
+                        {
+                            "id": "1",
+                            "label": {
+                                "en": "Enabled"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "power_consumption_max_delay_time",
+                    "type": "number",
+                    "label": {
+                        "en": "Power consumption max delay time"
+                    },
+                    "hint": {
+                        "en": "Defines the max time before motor power consumption is read after one of the relays is switched ON. If there is no power consumption during this max time (motor not connected, damaged or requires higher time to start, motor in end position,...) the relay will switch OFF. Available settings: 3 - 50 = 0,3 seconds - 5 seconds (100ms resolution)."
+                    },
+                    "value": 8,
+                    "attr": {
+                        "min": 3,
+                        "max": 50
+                    }
+                },
+                {
+                    "id": "power_consumption_at_limit_switch_delay_time",
+                    "type": "number",
+                    "label": {
+                        "en": "Power consumption at limit switch delay time"
+                    },
+                    "hint": {
+                        "en": "Defines the max time at limit switch, when power consumption is below power threshold. If the power consumption during this time is below power threshold (par. 76), the active output will switch off, means that limit switch is reached. Available settings: 3 - 50 = 0,3 seconds - 5 seconds (100ms resolution)."
+                    },
+                    "value": 8,
+                    "attr": {
+                        "min": 3,
+                        "max": 50
+                    }
+                },
+                {
+                    "id": "delay_time_between_outputs",
+                    "type": "number",
+                    "label": {
+                        "en": "Delay time between outputs"
+                    },
+                    "hint": {
+                        "en": "Defines the time delay between output relay switching (time between switching up/down and vice versa). Available settings: 1 - 30 = 0,1 seconds - 3 seconds (100ms resolution)."
+                    },
+                    "value": 5,
+                    "attr": {
+                        "min": 1,
+                        "max": 30
+                    }
+                },
+                {
+                    "id": "temperature_sensor_offset_settings",
+                    "type": "number",
+                    "label": {
+                        "en": "Temperature sensor offset settings"
+                    },
+                    "hint": {
+                        "en": "From 1 to 100 - value from 0.1 C to 10.0 C is added to actual measured temperature. From 1001 to 1100 - value from -0.1 C to -10.0 C is subtracted to actual measured temperature."
+                    },
+                    "value": 32536,
+                    "attr": {
+                        "min": 1,
+                        "max": 32536
+                    }
+                },
+                {
+                    "id": "digital_temperature_sensor_reporting",
+                    "type": "number",
+                    "label": {
+                        "en": "Digital temperature sensor reporting"
+                    },
+                    "hint": {
+                        "en": "If digital temperature sensor is connected, module reports measured temperature on temperature change defined by this parameter. Available settings: 0 - Reporting disabled. 1 - 127 = 0,1C - 12,7C, step is 0,1C."
+                    },
+                    "value": 5,
+                    "attr": {
+                        "min": 0,
+                        "max": 127
+                    }
+                }
+            ]
+        }
+    ],
+    "flow": {
+        "actions": [
+            {
+                "id": "shutter_position",
+                "title": {
+                    "en": "Set to position"
+                },
+                "args": [
+                    {
+                        "name": "device",
+                        "type": "device",
+                        "filter": "driver_id=ZMNHOD1"
+                    },
+                    {
+                        "type": "range",
+                        "name": "value",
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "label": "%",
+                        "labelMultiplier": 0,
+                        "labelDecimals": 0
+                    }
+                ]
+            },
+            {
+                "id": "slats_tilt",
+                "title": {
+                    "en": "Tilt slats"
+                },
+                "args": [
+                    {
+                        "name": "device",
+                        "type": "device",
+                        "filter": "driver_id=ZMNHOD1"
+                    },
+                    {
+                        "type": "range",
+                        "name": "value",
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "label": "%",
+                        "labelMultiplier": 0,
+                        "labelDecimals": 0
+                    }
+                ]
+            }
+        ]
+    }
+}
